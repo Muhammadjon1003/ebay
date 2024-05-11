@@ -1,6 +1,6 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import  { CSSProperties, useState } from 'react';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -16,7 +16,7 @@ const style: CSSProperties = {
     '--swiper-pagination-color': '#fff',
 } as CSSProperties;
 export default function SingleProductCarousel(product:Product | undefined) {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   return (
     <div className='single_product-carousel'>

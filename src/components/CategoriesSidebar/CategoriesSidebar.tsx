@@ -1,7 +1,7 @@
-import { renderProducts, useFetchData } from '../../Utils'
+import { useFetchData } from '../../Utils'
 import './CategoriesSidebar.scss'
 const CategoriesSidebar = ({products}:{products: Product[]}) => {
-   const categories = useFetchData('https://dummyjson.com/products/categories')
+   const categories: string[] = useFetchData('https://dummyjson.com/products/categories')
   const uniqueBrandNames = [...new Set(products.map(product => product.brand))];
   return (
     <div className='categories_sidebar'>

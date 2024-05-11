@@ -11,6 +11,7 @@ const SingleProduct = () => {
     const dispatch = useDispatch()
     const [product, setProduct] = useState<Product | undefined>(undefined);
     const [_,products, productId] = pathname.split("/");
+    console.log(products, productId)
     const data = useFetchData(`https://dummyjson.com/products/${productId}`);
     useEffect(() => {
       if(data){

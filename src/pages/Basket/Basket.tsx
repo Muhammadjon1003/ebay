@@ -1,17 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { calculateOldPrice, loadFromLocalStorage, saveToLocalStorage } from "../../Utils"
+import { calculateOldPrice, saveToLocalStorage } from "../../Utils"
 import "./Basket.scss"
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { RootState } from "../../redux/store/store";
 import { decrementCount, incrementCount, removeFromCart } from "../../redux/slice/cartSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 const Basket = () => {
   const dispatch = useDispatch()
   const cartStorage = useSelector((state: RootState) => state.cart.cartStorage)
   useEffect(() => {
     saveToLocalStorage("cartStorage", cartStorage)
   }, [cartStorage])
-  const totalPrice = cartStorage.reduce((total, product) => total + (product.price * product?.amount), 0);
+  const totalPrice = cartStorage.reduce((total, product) => {
+    const productPrice = product.amount ? product.price * product.amount : 0;
+    return total + productPrice;
+  }, 0);
   return (
     <main>
       <div className="basketDiv" >

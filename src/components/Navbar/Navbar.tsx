@@ -11,22 +11,10 @@ import SearchModule from '../SearchModule/SearchModule';
 const Navbar = () => {
   const [categories, setCategories] = useState<string[]>([])
   const [inputValue, setInputValue] = useState('')
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   let selectedCategories = handleSelectedCategories('https://dummyjson.com/products/categories', 10)
   useEffect(() => {
     setCategories(selectedCategories)
   }, [selectedCategories])
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearchFunction()

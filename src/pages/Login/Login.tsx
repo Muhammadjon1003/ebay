@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [userDatatoken, setUserDatatoken] = useState(null);
   const user = loadFromLocalStorage('user')
+  setUserDatatoken(user.userDatatoken)
   const handleLogin = () => {
     if (user.username === username && user.password === password) {
       window.location.href = "/"
