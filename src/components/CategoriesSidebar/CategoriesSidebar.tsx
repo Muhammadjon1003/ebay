@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useFetchData } from '../../Utils'
 import './CategoriesSidebar.scss'
 const CategoriesSidebar = ({products}:{products: Product[]}) => {
@@ -8,7 +9,7 @@ const CategoriesSidebar = ({products}:{products: Product[]}) => {
         <div className="sidebar__component">
             <h1>Shop by categories</h1>
         <ul>
-            {categories && categories.map((category) => <li key={category}>{category}</li>)}
+            {categories && categories.map((category) => <li key={category}><Link to={`/category/${category}`}>{category}</Link></li>)}
         </ul>
       </div>
         <div className="sidebar__component">

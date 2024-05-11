@@ -5,12 +5,21 @@ import { FaChevronDown } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
 import { IoIosSearch } from "react-icons/io";
-import { handleSelectedCategories } from '../../Utils';
+import { handleSelectedCategories, loadFromLocalStorage } from '../../Utils';
 import { useEffect, useState } from 'react';
 import SearchModule from '../SearchModule/SearchModule';
+import CategoryModule from '../CategoryModule/CategoryModule';
 const Navbar = () => {
   const [categories, setCategories] = useState<string[]>([])
   const [inputValue, setInputValue] = useState('')
+  const [isClicked, setisClicked] = useState<boolean>(false)
+  const [isSignIn, setIsSignIn] = useState(false)
+  const user = loadFromLocalStorage('user')
+ useEffect(() => {
+  if(user){
+    setIsSignIn(true)
+  }
+ },[])
   let selectedCategories = handleSelectedCategories('https://dummyjson.com/products/categories', 10)
   useEffect(() => {
     setCategories(selectedCategories)
@@ -26,11 +35,13 @@ const Navbar = () => {
     setInputValue('')
     window.location.href = "/products/search/" + inputValue
   }
+  console.log(isClicked);
+  
   return (
     <nav className="navbar">
       <div className="navbar__top">
         <div className="navbar__top-right">
-          <p>Hi <Link to='/'>Sign in</Link> or <Link to='/'>Register</Link></p>
+          <p>Hi {isSignIn ? (<span>{user.username}</span>) : (<span>(<Link to='/login'>Sign in</Link> or <Link to='/signup'>Register</Link>)</span>)}</p>
           <ul>
             <li>Daily deals</li>
             <li>Brand outlets</li>
@@ -41,17 +52,18 @@ const Navbar = () => {
         <div className="navbar__top-right">
           <ul>
             <li>Sell</li>
-            <li>Watchlist <FaChevronDown /></li>
+            <li><Link to="/like">Watchlist <FaChevronDown /></Link></li>
             <li>My ebay <FaChevronDown /></li>
             <li><IoNotificationsOutline size={25} /></li>
-            <li><IoCartOutline size={25} /></li>
+            <li><Link to="/cart"><IoCartOutline size={25} /></Link></li>
           </ul>
         </div>
       </div>
       <div className="navbar__bottom">
         <img src={logo} alt="" />
-        <button className='navbar__bottom-category'>
+        <button className='navbar__bottom-category' onClick={() => setisClicked(!isClicked)}>
           <p>Shop by category</p> <FaChevronDown size={30} />
+          <CategoryModule isClicked={isClicked} setisClicked={setisClicked}/>
         </button>
         <div className="navbar__bottom-search">
           <input type="text" placeholder='Search for anything' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyPress={handleKeyPress} />
@@ -59,7 +71,7 @@ const Navbar = () => {
           <SearchModule inputValue={inputValue} setInputValue={setInputValue} />
           <select name="category-select" id="category-select">
             <option value="0">All Categories</option>
-            <option value="1">Smartphones</option>
+            {categories && categories.map((category) => <option value={category}>{category}</option>)}
           </select>
         </div>
         <button className='navbar__bottom-submit' onClick={handleSearchFunction} >

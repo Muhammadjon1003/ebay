@@ -36,6 +36,11 @@
      li{
          cursor: pointer;
          text-transform: capitalize;
+
+     }
+     a{
+         text-decoration: none;
+         color: #000;
      }
   }
 }
@@ -50,6 +55,8 @@
     font-size: 14px;
     line-height: 14px;
     padding: 6px;
+    position: relative;
+    cursor: pointer;
 }
 .navbar__bottom-search{
     height: 42px;
@@ -116,6 +123,31 @@
     a{
         text-decoration: none;
         color: #000;
+    }
+}
+.category_module{
+    display: none;
+}
+.category_module-active{
+    width: 350%;
+    height: 400px;
+    position: absolute;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    top: 100%; 
+    left: 0; 
+    z-index: 1; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border-radius: 4px;
+    a{
+        text-decoration: none;
+        color: #000;
+        font-size: 15px;
+        font-family: 'ABeeZee';
     }
 }
 .navbar__categories{
