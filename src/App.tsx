@@ -9,7 +9,7 @@ const {pathname} = useLocation()
     <div className='App_container'>
   { !pathname.includes('/login') && !pathname.includes('/signup') && <Navbar/>}
     <RouterController/>
-    {/* { !pathname.includes('/login') && !pathname.includes('/signup') && <Footer/>} */}
+    { !pathname.includes('/login') && !pathname.includes('/signup') && <Footer/>}
 
     </div>
   )
