@@ -1,0 +1,10 @@
+.categories{
+    display: flex;
+}
+.categories_content{
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}

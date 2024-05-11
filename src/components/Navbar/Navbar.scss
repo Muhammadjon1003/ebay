@@ -1,0 +1,206 @@
+.navbar{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__top{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 35px;
+        border-bottom: 0.5px solid #969696;
+    }
+    &__bottom{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 15px 35px;
+        border-bottom: 0.5px solid #969696;
+        img{
+            width: 125px;
+        }
+    }
+}
+.navbar__top-right{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+  ul{
+    display: flex;
+     align-items: center;
+     gap: 15px;
+     li{
+         cursor: pointer;
+         text-transform: capitalize;
+     }
+  }
+}
+.navbar__bottom-category{
+    width: 90px;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    margin: 0 7px;
+    color: #555;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 6px;
+}
+.navbar__bottom-search{
+    height: 42px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    svg{
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+    }
+    input{
+        height: 100%;
+        width: 80%;
+        padding: 15px 35px;
+        border: 1.5px solid;
+        border-right: none;
+     &::placeholder{
+       font-size: 16px;
+       line-height: 20px;
+     }
+    }
+    select{
+        height: 100%;
+        width: 25%;
+        border: 1.5px solid;
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+.navbar__bottom-submit{
+    height: 42px;
+    width: 250px;
+    margin-left: 10px;
+    background: #3665f3;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+.advanced_search{
+    font-size: 11px;
+    line-height: 40px;
+    padding: 0 10px;
+    white-space: nowrap;
+    color: #666;
+}
+.search_module{
+    display: none;
+}
+.search_module-active{
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    top: 100%; 
+    left: 0; 
+    z-index: 1; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border-radius: 4px;
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+}
+.navbar__categories{
+    width: 100%;
+    padding: 10px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ul{
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        li{
+            font-size: 12px;
+            font-family: 'ABeeZee';
+            text-transform: capitalize;
+        }
+        a{
+            color: #000;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: center;
+            &:hover{
+            color: blue;
+            text-decoration: underline;
+            }
+        }
+    }
+}
+@media (max-width: 1045px) {
+.navbar__bottom{
+    img{
+        width: 12%;
+    }
+}
+}
+@media (min-width: 720px) and (max-width: 920px) {
+    .navbar__bottom-search{
+        input{
+            &::placeholder{
+                font-size: 14px;
+            }
+        }
+        select{
+            font-size: 10px;
+        }
+    }
+    .navbar__top-right{
+        font-size: 10px;
+        gap: 25px;
+    }
+    .navbar__categories{
+        ul{
+            gap: 10px;
+            li{
+                font-size: 9px;
+            }
+        }
+    }
+}
+@media (min-width: 520px) and (max-width: 721px) {
+    .navbar__bottom-search{
+        input{
+            &::placeholder{
+                font-size: 12px;
+            }
+        }
+        select{
+            font-size: 8px;
+        }
+    }
+    .navbar__top-right{
+        font-size: 8px;
+        gap: 15px;
+    }
+    .navbar__categories{
+        ul{
+            gap: 7px;
+            li{
+                font-size: 8px;
+            }
+        }
+    }
+}

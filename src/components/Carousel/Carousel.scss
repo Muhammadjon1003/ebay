@@ -1,0 +1,134 @@
+.carousel_wrapper{
+    margin-top: 40px;
+    
+    width: 100%;
+    height: 380px;
+.swiper-wrapper{
+    overflow: hidden !important;
+}
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide{
+    height: 100%;
+  }
+  .swiper-button-prev {
+    background-image: url(../../assets/icons/arrow-circle-left.svg) !important;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    top: 355px !important;
+    width: 20px;
+    margin-left: 88%;
+    }
+    
+    .swiper-button-next {
+    background-image: url(../../assets/icons/arrow-circle-right.svg) !important;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    top: 355px !important;
+    width: 20px;
+    margin-right: 4%;
+    }
+    
+    .swiper-button-next::after {
+    display: none;
+    }
+    
+    .swiper-button-prev::after {
+    display: none;
+    }
+    .pause_button{
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bottom: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        right: 10px;
+        svg{
+            fill: #fff;
+            stroke: #fff;
+        }
+    }
+}
+@media (min-width: 800px) and (max-width: 1045px) {
+    .carousel_wrapper{
+        height: 340px;
+        .swiper-button-prev{
+            top: 315px !important;
+    margin-left: 82%;
+
+        }
+        .swiper-button-next{
+            top: 315px !important;
+    margin-right: 5%;
+
+        }
+        .pause_button{
+        right: 7px;
+            
+        }
+    }
+}
+@media (min-width: 600px) and (max-width: 801px) {
+    .carousel_wrapper{
+        height: 310px;
+        .swiper-button-prev{
+            top: 285px !important;
+    margin-left: 83%;
+
+        }
+        .swiper-button-next{
+            top: 285px !important;
+    margin-right: 6%;
+
+        }
+        .pause_button{
+            right: 4px;
+                
+            }
+    }
+}
+@media (min-width: 400px) and (max-width: 601px) {
+    .carousel_wrapper{
+        height: 280px;
+        .swiper-button-prev{
+            top: 255px !important;
+    margin-left: 81%;
+
+        }
+        .swiper-button-next{
+            top: 255px !important;
+    margin-right: 7%;
+
+        }
+        .pause_button{
+            right: 2px;
+                
+            }
+    }
+}
+@media  (max-width: 401px) {
+    .carousel_wrapper{
+        height: 240px;
+        .swiper-button-prev{
+            top: 215px !important;
+    margin-left: 79%;
+
+        }
+        .swiper-button-next{
+            top: 215px !important;
+    margin-right: 8%;
+
+        }
+        .pause_button{
+            right: 0px;
+                
+            }
+    }
+}

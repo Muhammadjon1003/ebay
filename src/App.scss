@@ -1,0 +1,15 @@
+@import './sass/reset.scss';
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap');
+@font-face {
+    font-family: 'MarketSans';
+    src: url('./assets/fonts/MarketSans-Regular.otf') format('opentype');
+  }
+*{
+    box-sizing: border-box;
+}
+.App_container{
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: "MarketSans";
+}
