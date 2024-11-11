@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import SearchModule from '../SearchModule/SearchModule';
 import CategoryModule from '../CategoryModule/CategoryModule';
 const Navbar = () => {
-  const [categories, setCategories] = useState<string[]>([])
+  const [categories, setCategories] = useState<object[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isClicked, setisClicked] = useState<boolean>(false)
   const [isSignIn, setIsSignIn] = useState(false)
@@ -21,6 +21,7 @@ const Navbar = () => {
   }
  },[])
   let selectedCategories = handleSelectedCategories('https://dummyjson.com/products/categories', 10)
+  console.log("categorie", selectedCategories)
   useEffect(() => {
     setCategories(selectedCategories)
   }, [selectedCategories])
@@ -71,7 +72,7 @@ const Navbar = () => {
           <SearchModule inputValue={inputValue} setInputValue={setInputValue} />
           <select name="category-select" id="category-select">
             <option value="0">All Categories</option>
-            {categories && categories.map((category) => <option value={category}>{category}</option>)}
+            {categories && categories.map((category) => <option value={category.name}>{category.name}</option>)}
           </select>
         </div>
         <button className='navbar__bottom-submit' onClick={handleSearchFunction} >
@@ -81,7 +82,7 @@ const Navbar = () => {
       </div>
       <div className="navbar__categories">
         <ul>
-          {categories && categories.map((category) => <li><Link to={`/category/${category}`}>{category}</Link></li>)}
+          {categories && categories.map((category) => <li><Link to={`/category/${category.name}`}>{category.name}</Link></li>)}
         </ul>
       </div>
     </nav>

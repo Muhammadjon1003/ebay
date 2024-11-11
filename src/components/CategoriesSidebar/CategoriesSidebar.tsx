@@ -2,14 +2,16 @@ import { Link } from 'react-router-dom';
 import { useFetchData } from '../../Utils'
 import './CategoriesSidebar.scss'
 const CategoriesSidebar = ({products}:{products: Product[]}) => {
-   const categories: string[] = useFetchData('https://dummyjson.com/products/categories')
+   const categories: object[] = useFetchData('https://dummyjson.com/products/categories')
   const uniqueBrandNames = [...new Set(products.map(product => product.brand))];
+  console.log("unique",uniqueBrandNames);
+  
   return (
     <div className='categories_sidebar'>
         <div className="sidebar__component">
             <h1>Shop by categories</h1>
         <ul>
-            {categories && categories.map((category) => <li key={category}><Link to={`/category/${category}`}>{category}</Link></li>)}
+            {categories && categories.map((category) => <li key={category.name}><Link to={`/category/${category.name}`}>{category.name}</Link></li>)}
         </ul>
       </div>
         <div className="sidebar__component">
