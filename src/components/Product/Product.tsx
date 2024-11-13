@@ -33,7 +33,7 @@ useEffect(() => {
 },[LikedProducts])
   const random = parseInt((Math.random() * 100).toString());
   const handleLike = () => {
-    dispatch(likeProduct({product}));
+    dispatch(likeProduct(product));
   };
   
   const handleDislike = () => {
@@ -45,7 +45,7 @@ useEffect(() => {
     <div className="product">
       <Link to={`/products/${id}`}>
         <div className="product_image">
-          <img src={thumbnail} alt="product image" />
+          <img src={thumbnail} alt={title} />
         </div>
         <div className="product_info">
           <h1>{title}</h1>
