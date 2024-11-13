@@ -9,34 +9,43 @@ import { handleSelectedCategories, loadFromLocalStorage } from '../../Utils';
 import { useEffect, useState } from 'react';
 import SearchModule from '../SearchModule/SearchModule';
 import CategoryModule from '../CategoryModule/CategoryModule';
+import { Category } from '../../types/Product';
+
 const Navbar = () => {
-  const [categories, setCategories] = useState<object[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isClicked, setisClicked] = useState<boolean>(false)
   const [isSignIn, setIsSignIn] = useState(false)
   const user = loadFromLocalStorage('user')
- useEffect(() => {
-  if(user){
-    setIsSignIn(true)
-  }
- },[])
+  
+  useEffect(() => {
+    if(user){
+      setIsSignIn(true)
+    }
+  },[])
+
   let selectedCategories = handleSelectedCategories('https://dummyjson.com/products/categories', 10)
   console.log("categorie", selectedCategories)
+  
   useEffect(() => {
-    setCategories(selectedCategories)
+    // Transform the categories into the correct format
+    const formattedCategories = selectedCategories.map(category => ({
+      name: category as string
+    }));
+    setCategories(formattedCategories);
   }, [selectedCategories])
+
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearchFunction()
     }
     console.log("search button clicked");
-
   };
+
   const handleSearchFunction = () => {
     setInputValue('')
     window.location.href = "/products/search/" + inputValue
   }
-  console.log(isClicked);
   
   return (
     <nav className="navbar">
@@ -72,7 +81,9 @@ const Navbar = () => {
           <SearchModule inputValue={inputValue} setInputValue={setInputValue} />
           <select name="category-select" id="category-select">
             <option value="0">All Categories</option>
-            {categories && categories.map((category) => <option value={category.name}>{category.name}</option>)}
+            {categories && categories.map((category, index) => (
+              <option key={index} value={category.name}>{category.name}</option>
+            ))}
           </select>
         </div>
         <button className='navbar__bottom-submit' onClick={handleSearchFunction} >
@@ -82,7 +93,11 @@ const Navbar = () => {
       </div>
       <div className="navbar__categories">
         <ul>
-          {categories && categories.map((category) => <li><Link to={`/category/${category.name}`}>{category.name}</Link></li>)}
+          {categories && categories.map((category, index) => (
+            <li key={index}>
+              <Link to={`/category/${category.name}`}>{category.name}</Link>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>
