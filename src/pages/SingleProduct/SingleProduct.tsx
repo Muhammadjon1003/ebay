@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { saveToLocalStorage, useFetchData } from "../../Utils";
 import SingleProductCarousel from "../../components/SingleProductCarousel/SingleProductCarousel";
 import './SingleProduct.scss'
@@ -19,7 +19,7 @@ const SingleProduct = () => {
     const [product, setProduct] = useState<Product | undefined>(undefined);
     const [isInCart, setIsInCart] = useState(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
-    const [_,products, productId] = pathname.split("/");
+    const [_, productId] = pathname.split("/");
     
     const data = useFetchData(`https://dummyjson.com/products/${productId}`);
     const cartStorage = useSelector((state: RootState) => state.cart.cartStorage);

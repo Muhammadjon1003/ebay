@@ -11,7 +11,7 @@ const Search = () => {
   const products: ProductType[] = response?.products || [];
   const isLoading = !response;
   const {pathname} = useLocation();
-  const [_, productpathname, search, inputValue] = pathname.split("/");
+  const [_, ___, inputValue] = pathname.split("/");
   
   const filteredProducts = products.filter((product: ProductType) =>
     product.title.toLowerCase().startsWith(inputValue.toLowerCase())
