@@ -28,11 +28,13 @@ const Navbar = () => {
   console.log("categorie", selectedCategories)
   
   useEffect(() => {
-    // Transform the categories into the correct format
-    const formattedCategories = selectedCategories.map(category => ({
-      name: category as string
-    }));
-    setCategories(formattedCategories);
+    if (selectedCategories) {
+      // Transform the categories into the correct format
+      const formattedCategories = selectedCategories.map((category: any) => ({
+        name: typeof category === 'string' ? category : category.category
+      }));
+      setCategories(formattedCategories);
+    }
   }, [selectedCategories])
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
