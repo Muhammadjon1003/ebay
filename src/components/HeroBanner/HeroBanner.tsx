@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import './HeroBanner.scss';
+import './Herobanner.scss';
 
 interface HeroBannerProps {
-  variant?: 'first' | 'second';  // Add variant prop
+  variant?: 'first' | 'second';
 }
 
-const firstBannerStyles = [
+const bannerStyles = [
     {
         style: 'style1',
         title: 'Summer Sale',
@@ -19,10 +19,7 @@ const firstBannerStyles = [
         description: 'Check out our latest collection',
         buttonText: 'Discover More',
         image: 'https://i.ebayimg.com/images/g/1mQAAOSwropmIxmj/s-l960.webp'
-    }
-];
-
-const secondBannerStyles = [
+    },
     {
         style: 'style3',
         title: 'Special Deals',
@@ -40,13 +37,13 @@ const secondBannerStyles = [
 ];
 
 const HeroBanner = ({ variant = 'first' }: HeroBannerProps) => {
-    const bannerStyles = variant === 'first' ? firstBannerStyles : secondBannerStyles;
-    const [currentStyle, setCurrentStyle] = useState(bannerStyles[0]);
+    const bannerStylesSet = variant === 'first' ? bannerStyles.slice(0, 2) : bannerStyles.slice(2);
+    const [currentStyle, setCurrentStyle] = useState(bannerStylesSet[0]);
 
     useEffect(() => {
-        const randomIndex = Math.floor(Math.random() * bannerStyles.length);
-        setCurrentStyle(bannerStyles[randomIndex]);
-    }, [bannerStyles]);
+        const randomIndex = Math.floor(Math.random() * bannerStylesSet.length);
+        setCurrentStyle(bannerStylesSet[randomIndex]);
+    }, [bannerStylesSet]);
 
     return (
         <div className={`hero_banner ${currentStyle.style}`}>
