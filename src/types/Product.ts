@@ -21,6 +21,8 @@ export interface Meta {
 
 export interface Category {
   name: string;
+  slug: string;
+  url: string;
 }
 
 export interface Product {

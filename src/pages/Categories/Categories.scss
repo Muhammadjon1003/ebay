@@ -7,4 +7,15 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    min-height: 400px;
+    position: relative;
+}
+.no-products {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  text-align: center;
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useFetchData } from "../../Utils"
+import { useFetchCategories } from "../../Utils"
 import { Category } from "../../types/Product";
 import { useEffect, useState } from "react";
 
@@ -11,25 +11,32 @@ const CategoryModule = ({
   setisClicked: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const rawCategories = useFetchData('https://dummyjson.com/products/categories');
-
+    const rawCategories = useFetchCategories('https://dummyjson.com/products/categories', 20);
+    
     useEffect(() => {
-      if (rawCategories) {
-        const formattedCategories = rawCategories.map((category: string) => ({ 
-          name: category 
-        }));
+      if (Array.isArray(rawCategories)) {
+        const formattedCategories = rawCategories.map(categoryName => {
+          const name = String(categoryName);
+          return {
+            name: name,
+            slug: name.toLowerCase().replace(/\s+/g, '-'),
+            url: `https://dummyjson.com/products/category/${name.toLowerCase().replace(/\s+/g, '-')}`
+          };
+        });
         setCategories(formattedCategories);
       }
     }, [rawCategories]);
 
     return (
-      <ul className={`category_module ${isClicked ? 'category_module-active' : ''}`}>
-        {isClicked && categories && categories.map((category, index) => (
-          <li key={index} onClick={() => setisClicked(false)}>
-            <Link to={`/category/${category.name}`}>{category.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <div className={`category_module ${isClicked ? 'category_module-active' : ''}`}>
+        <ul>
+          {categories.map((category, index) => (
+            <li key={index} onClick={() => setisClicked(false)}>
+              <Link to={`/category/${category.slug}`}>{category.name}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
 };
 

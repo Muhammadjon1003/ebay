@@ -20,6 +20,71 @@
             scale: 1.05;
         }
     }
+    .product_header {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        
+        .product_brand {
+            color: #666;
+            font-size: 0.9em;
+        }
+    }
+    .discount_badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #e53238;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    .product_price_info {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
+    .product_details {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #333;
+        svg {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    }
+    .status_indicator {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.85em;
+        
+        &.in_stock {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        &.low_stock {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        &.out_of_stock {
+            background: #ffebee;
+            color: #c62828;
+        }
+    }
+    .product_moq {
+        color: #d32f2f;
+        font-weight: 500;
+    }
+    .product_return {
+        color: #666;
+        font-size: 0.85em;
+    }
 }
 .product_image{
     width: 100%;

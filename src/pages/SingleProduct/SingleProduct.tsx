@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { saveToLocalStorage, useFetchData } from "../../Utils";
 import SingleProductCarousel from "../../components/SingleProductCarousel/SingleProductCarousel";
 import './SingleProduct.scss'
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { addToCart } from "../../redux/slice/cartSlice";
+import { likeProduct, dislikeProduct } from "../../redux/slice/likeSlice";
 import { IoMdStar } from "react-icons/io";
 import { FaShippingFast, FaWarehouse } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
@@ -13,11 +14,16 @@ import { Product, Review } from "../../types/Product";
 
 const SingleProduct = () => {
     const {pathname} = useLocation()
+    const navigate = useNavigate();
     const dispatch = useDispatch()
     const [product, setProduct] = useState<Product | undefined>(undefined);
+    const [isInCart, setIsInCart] = useState(false);
+    const [isInWishlist, setIsInWishlist] = useState(false);
     const [_,products, productId] = pathname.split("/");
-    console.log(products, productId)
+    
     const data = useFetchData(`https://dummyjson.com/products/${productId}`);
+    const cartStorage = useSelector((state: RootState) => state.cart.cartStorage);
+    const likedProducts = useSelector((state: RootState) => state.like.likedProducts);
     
     useEffect(() => {
       if(data){
@@ -25,15 +31,39 @@ const SingleProduct = () => {
       }
     }, [data])
 
-    const handleAddToCart = () => {
-      dispatch(addToCart({ ...product, amount:1}));
+    useEffect(() => {
+      if (product) {
+        setIsInCart(cartStorage.some(item => item.id === product.id));
+        setIsInWishlist(likedProducts.some(item => item.id === product.id));
+      }
+    }, [product, cartStorage, likedProducts]);
+
+    const handleBuyNow = () => {
+      if (product) {
+        dispatch(addToCart({ ...product, amount: 1 }));
+        navigate('/cart');
+      }
     };
 
-    const cartStorage = useSelector((state: RootState) => state.cart.cartStorage)
+    const handleAddToCart = () => {
+      if (product) {
+        dispatch(addToCart({ ...product, amount: 1 }));
+      }
+    };
+
+    const handleWishlist = () => {
+      if (product) {
+        if (isInWishlist) {
+          dispatch(dislikeProduct(product));
+        } else {
+          dispatch(likeProduct(product));
+        }
+      }
+    };
+
     useEffect(() => {
       saveToLocalStorage("cartStorage", cartStorage)
     },[cartStorage])
-    console.log(cartStorage)
 
     // Calculate average rating from reviews
     const averageReviewRating = product?.reviews?.length 
@@ -97,15 +127,31 @@ const SingleProduct = () => {
 
             <div className="single_product-price">
               <div className="price_info">
-                <p>Price: <h3>${product?.price}</h3></p>
+                <div className="price-display">
+                  <span>Price:</span>
+                  <h3>${product?.price}</h3>
+                </div>
                 {product?.discountPercentage && product.discountPercentage > 0 && (
                   <span className="discount">-{Math.round(product.discountPercentage)}% OFF</span>
                 )}
               </div>
               <div className="single_product-buttons">
-                <button className="buy_now">Buy Now</button>
-                <button className="add_to_cart" onClick={handleAddToCart}>Add to Cart</button>
-                <button className="add_to_wishlist">Add to Wishlist</button>
+                <button className="buy_now" onClick={handleBuyNow}>
+                  Buy Now
+                </button>
+                <button 
+                  className={`add_to_cart ${isInCart ? 'added' : ''}`} 
+                  onClick={handleAddToCart}
+                  disabled={isInCart}
+                >
+                  {isInCart ? 'Added to Cart' : 'Add to Cart'}
+                </button>
+                <button 
+                  className={`add_to_wishlist ${isInWishlist ? 'added' : ''}`}
+                  onClick={handleWishlist}
+                >
+                  {isInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
+                </button>
               </div>
             </div>
           </div>

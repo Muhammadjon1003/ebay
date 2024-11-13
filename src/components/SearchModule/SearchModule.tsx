@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { renderProducts } from "../../Utils";
+import { useFetchData } from "../../Utils";
 import { Product } from "../../types/Product";
 
 const SearchModule = ({
@@ -9,12 +9,13 @@ const SearchModule = ({
   inputValue: string, 
   setInputValue: React.Dispatch<React.SetStateAction<string>>
 }) => {
-  const products: Product[] = renderProducts('https://dummyjson.com/products?limit=200')
+  const response = useFetchData('https://dummyjson.com/products?limit=200');
+  const products: Product[] = response?.products || [];
 
   const filteredProducts = products.filter(product =>
     product.title.toLowerCase().includes(inputValue.toLowerCase()) ||
-    (product.tags && product.tags.some((tag: string) => tag.toLowerCase().includes(inputValue.toLowerCase())))
-  );
+    (product.tags && product.tags.some(tag => tag.toLowerCase().includes(inputValue.toLowerCase())))
+  ).slice(0, 10); // Limit the number of search results
 
   return (
     <ul className={`search_module ${inputValue ? 'search_module-active' : ''}`}>

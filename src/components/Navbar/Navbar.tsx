@@ -5,7 +5,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
 import { IoIosSearch } from "react-icons/io";
-import { handleSelectedCategories, loadFromLocalStorage } from '../../Utils';
+import { useFetchCategories, loadFromLocalStorage } from '../../Utils';
 import { useEffect, useState } from 'react';
 import SearchModule from '../SearchModule/SearchModule';
 import CategoryModule from '../CategoryModule/CategoryModule';
@@ -18,42 +18,49 @@ const Navbar = () => {
   const [isSignIn, setIsSignIn] = useState(false)
   const user = loadFromLocalStorage('user')
   
-  useEffect(() => {
-    if(user){
-      setIsSignIn(true)
-    }
-  },[])
-
-  let selectedCategories = handleSelectedCategories('https://dummyjson.com/products/categories', 10)
-  console.log("categorie", selectedCategories)
+  const rawCategories = useFetchCategories('https://dummyjson.com/products/categories', 10);
   
   useEffect(() => {
-    if (selectedCategories) {
-      // Transform the categories into the correct format
-      const formattedCategories = selectedCategories.map((category: any) => ({
-        name: typeof category === 'string' ? category : category.category
+    if(user && user.userDatatoken) {
+      setIsSignIn(true)
+    } else {
+      setIsSignIn(false)
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (Array.isArray(rawCategories)) {
+      const formattedCategories = rawCategories.map(categoryName => ({
+        name: String(categoryName),
+        slug: String(categoryName).toLowerCase().replace(/\s+/g, '-'),
+        url: `https://dummyjson.com/products/category/${String(categoryName).toLowerCase().replace(/\s+/g, '-')}`
       }));
       setCategories(formattedCategories);
     }
-  }, [selectedCategories])
+  }, [rawCategories]);
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearchFunction()
     }
-    console.log("search button clicked");
   };
 
   const handleSearchFunction = () => {
-    setInputValue('')
-    window.location.href = "/products/search/" + inputValue
+    if (inputValue.trim()) {
+      setInputValue('')
+      window.location.href = "/products/search/" + inputValue
+    }
   }
   
   return (
     <nav className="navbar">
       <div className="navbar__top">
         <div className="navbar__top-right">
-          <p>Hi {isSignIn ? (<span>{user.username}</span>) : (<span>(<Link to='/login'>Sign in</Link> or <Link to='/signup'>Register</Link>)</span>)}</p>
+          <p>Hi {isSignIn && user ? (
+            <span>{user.username}</span>
+          ) : (
+            <span>(<Link to='/login'>Sign in</Link> or <Link to='/signup'>Register</Link>)</span>
+          )}</p>
           <ul>
             <li>Daily deals</li>
             <li>Brand outlets</li>
@@ -97,7 +104,7 @@ const Navbar = () => {
         <ul>
           {categories && categories.map((category, index) => (
             <li key={index}>
-              <Link to={`/category/${category.name}`}>{category.name}</Link>
+              <Link to={`/category/${category.slug}`}>{category.name}</Link>
             </li>
           ))}
         </ul>

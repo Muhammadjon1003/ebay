@@ -48,6 +48,26 @@
             font-size: 20px;
             border-radius: 45px;
             border: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+                opacity: 0.9;
+            }
+
+            &.added {
+                background: #28a745;
+                cursor: default;
+                
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                opacity: 0.8;
+            }
         }
         .buy_now{
             background: #0053A0;
@@ -56,11 +76,22 @@
         .add_to_cart{
             background: #3498CA;
             color: #fff;
+
+            &.added {
+                background: #28a745;
+                color: white;
+            }
         }
         .add_to_wishlist{
             border: 1px solid #3498CA;
             color: #0053A0;
             background: #fff;
+
+            &.added {
+                background: #dc3545;
+                color: white;
+                border-color: #dc3545;
+            }
         }
     }
 }
@@ -137,5 +168,20 @@
 
   .review {
     padding: 15px;
+  }
+}
+
+.price-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  span {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 30px;
+    margin: 0;
   }
 }

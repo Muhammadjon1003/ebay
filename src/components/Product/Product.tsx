@@ -20,18 +20,18 @@ const Product = (product: ProductType) => {
     stock, 
     discountPercentage,
     rating,
-    availabilityStatus,
     shippingInformation
   } = product;
   
   const [isliked, setIsliked] = useState(false)
-const dispatch = useDispatch()
-const LikedProducts = useSelector((state: RootState) => state.like.likedProducts)
-useEffect(() => {
-  saveToLocalStorage('likedProducts', LikedProducts)
-  setIsliked(isProductLiked(id, 'likedProducts'))
-},[LikedProducts])
-  const random = parseInt((Math.random() * 100).toString());
+  const dispatch = useDispatch()
+  const LikedProducts = useSelector((state: RootState) => state.like.likedProducts)
+  
+  useEffect(() => {
+    saveToLocalStorage('likedProducts', LikedProducts)
+    setIsliked(isProductLiked(id, 'likedProducts'))
+  },[LikedProducts])
+  
   const handleLike = () => {
     dispatch(likeProduct(product));
   };
@@ -39,7 +39,6 @@ useEffect(() => {
   const handleDislike = () => {
     dispatch(dislikeProduct(product));
   };
-  console.log(random);
   
   return (
     <div className="product">
@@ -63,7 +62,6 @@ useEffect(() => {
           <p className="product_price">${price}</p>
           <p className="product_old_price">Was: ${calculateOldPrice(price, discountPercentage)}</p>
           <p className="product_stock">{stock} in stock</p>
-          {availabilityStatus && <p className="product_status">{availabilityStatus}</p>}
           {shippingInformation && <p className="product_shipping">{shippingInformation}</p>}
         </div>
       </Link>

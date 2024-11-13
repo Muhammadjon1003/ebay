@@ -15,11 +15,13 @@ const likeSlice = createSlice({
   reducers: {
     likeProduct: (state, action: PayloadAction<Product>) => {
       state.likedProducts.push(action.payload);
+      localStorage.setItem('likedProducts', JSON.stringify(state.likedProducts));
     },
     dislikeProduct: (state, action: PayloadAction<Product>) => {
       state.likedProducts = state.likedProducts.filter(
         (product) => product.id !== action.payload.id
       );
+      localStorage.setItem('likedProducts', JSON.stringify(state.likedProducts));
     },
   },
 });

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Basket from './pages/Basket/Basket'
+import Basket from './pages/Cart/Cart'
 import Categories from './pages/Categories/Categories'
 import SingleProduct from './pages/SingleProduct/SingleProduct'
 import Like from './pages/Like/Like'

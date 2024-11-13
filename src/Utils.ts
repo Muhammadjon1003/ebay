@@ -21,24 +21,29 @@ export const useFetchData = (url: string) => {
   return data;
 };
 
-export const handleSelectedCategories = (url: string, limit: number) => {
-  const [data, setData] = useState<Product[]>([]);
+export const useFetchCategories = (url: string, limit: number) => {
+  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(url);
         const result = await response.json();
-        setData(result.products?.slice(0, limit) || []);
+        
+        const categoryData = Array.isArray(result) ? result : [];
+        const stringCategories = categoryData.slice(0, limit);
+        
+        setCategories(stringCategories);
       } catch (error) {
         console.error('Error fetching categories:', error);
+        setCategories([]);
       }
     };
 
     fetchData();
   }, [url, limit]);
 
-  return data;
+  return categories;
 };
 
 export const renderProducts = (url: string): Product[] => {
