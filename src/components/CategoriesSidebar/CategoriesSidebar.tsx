@@ -2,11 +2,21 @@ import { Link } from 'react-router-dom';
 import { useFetchData } from '../../Utils'
 import './CategoriesSidebar.scss'
 import { Category, Product } from '../../types/Product';
+import { useEffect, useState } from 'react';
 
 const CategoriesSidebar = ({ products }: { products: Product[] }) => {
-   const categories: Category[] = useFetchData('https://dummyjson.com/products/categories')
-      .map((category: string) => ({ name: category }));
-      
+   const [categories, setCategories] = useState<Category[]>([]);
+   const rawCategories = useFetchData('https://dummyjson.com/products/categories');
+
+   useEffect(() => {
+     if (rawCategories) {
+       const formattedCategories = rawCategories.map((category: string) => ({ 
+         name: category 
+       }));
+       setCategories(formattedCategories);
+     }
+   }, [rawCategories]);
+   
    const uniqueBrandNames = [...new Set(products.map(product => product.brand))];
    console.log("unique", uniqueBrandNames);
   
@@ -31,7 +41,7 @@ const CategoriesSidebar = ({ products }: { products: Product[] }) => {
         </ul>
       </div>
     </div>
-   )
-}
+   );
+};
 
-export default CategoriesSidebar
+export default CategoriesSidebar;
