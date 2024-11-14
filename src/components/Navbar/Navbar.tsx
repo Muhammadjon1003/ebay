@@ -3,7 +3,6 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { FaChevronDown } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.svg'
 import { IoIosSearch } from "react-icons/io";
 import { useFetchCategories, loadFromLocalStorage } from '../../Utils';
 import { useEffect, useState } from 'react';
@@ -66,14 +65,14 @@ const Navbar = () => {
           <ul>
             <li>Sell</li>
             <li><Link to="/like">Watchlist <FaChevronDown /></Link></li>
-            <li>My ebay <FaChevronDown /></li>
+            <li>My shop <FaChevronDown /></li>
             <li><IoNotificationsOutline size={25} /></li>
             <li><Link to="/cart"><IoCartOutline size={25} /></Link></li>
           </ul>
         </div>
       </div>
       <div className="navbar__bottom">
-        <img src={logo} alt="" />
+        <img src='https://irecommend.ru/sites/default/files/product-images/399872/B8jarTwAupKVWycOxWNBGw.png' alt="" />
         <button className='navbar__bottom-category' onClick={() => setisClicked(!isClicked)}>
           <p>Shop by category</p> <FaChevronDown size={30} />
           <CategoryModule isClicked={isClicked} setisClicked={setisClicked}/>
