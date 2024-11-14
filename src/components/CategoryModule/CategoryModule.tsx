@@ -15,15 +15,7 @@ const CategoryModule = ({
     
     useEffect(() => {
       if (Array.isArray(rawCategories)) {
-        const formattedCategories = rawCategories.map(categoryName => {
-          const name = String(categoryName);
-          return {
-            name: name,
-            slug: name.toLowerCase().replace(/\s+/g, '-'),
-            url: `https://dummyjson.com/products/category/${name.toLowerCase().replace(/\s+/g, '-')}`
-          };
-        });
-        setCategories(formattedCategories);
+        setCategories(rawCategories);
       }
     }, [rawCategories]);
 

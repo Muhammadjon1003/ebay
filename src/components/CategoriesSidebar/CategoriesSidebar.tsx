@@ -10,18 +10,14 @@ const CategoriesSidebar = ({ products }: { products: Product[] }) => {
 
    useEffect(() => {
      if (Array.isArray(rawCategories)) {
-       const formattedCategories = rawCategories.map(category => ({
-         name: category,
-         slug: category.toLowerCase().replace(' ', '-'),
-         url: `https://dummyjson.com/products/category/${category.toLowerCase().replace(' ', '-')}`
-       }));
-       setCategories(formattedCategories);
+       setCategories(rawCategories);
      }
    }, [rawCategories]);
    
-   // Get unique brands from the current products array
    const uniqueBrands = products && products.length > 0 
-     ? Array.from(new Set(products.map(product => product.brand))).sort((a, b) => a.localeCompare(b))
+     ? Array.from(new Set(products.map(product => product.brand)))
+       .filter(Boolean)
+       .sort((a, b) => a.localeCompare(b))
      : [];
   
    return (
@@ -36,13 +32,12 @@ const CategoriesSidebar = ({ products }: { products: Product[] }) => {
           ))}
         </ul>
       </div>
-      {uniqueBrands && uniqueBrands.length > 1 && (
+      {uniqueBrands.length > 0 && (
         <div className="sidebar__component">
           <h1>Available Brands</h1>
           <ul>
             {uniqueBrands.map((brand, index) => (
               <li key={index}>{brand}</li>
-              
             ))}
           </ul>
         </div>

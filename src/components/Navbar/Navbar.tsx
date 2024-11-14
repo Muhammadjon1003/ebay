@@ -14,28 +14,22 @@ import { Category } from '../../types/Product';
 const Navbar = () => {
   const [categories, setCategories] = useState<Category[]>([])
   const [inputValue, setInputValue] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('all')
   const [isClicked, setisClicked] = useState<boolean>(false)
   const [isSignIn, setIsSignIn] = useState(false)
   const user = loadFromLocalStorage('user')
   
-  const rawCategories = useFetchCategories('https://dummyjson.com/products/categories', 10);
+  const rawCategories = useFetchCategories('https://dummyjson.com/products/categories', 100);
   
   useEffect(() => {
-    if(user && user.userDatatoken) {
+    if(user){
       setIsSignIn(true)
-    } else {
-      setIsSignIn(false)
     }
-  }, [user])
+  },[])
 
   useEffect(() => {
     if (Array.isArray(rawCategories)) {
-      const formattedCategories = rawCategories.map(categoryName => ({
-        name: String(categoryName),
-        slug: String(categoryName).toLowerCase().replace(/\s+/g, '-'),
-        url: `https://dummyjson.com/products/category/${String(categoryName).toLowerCase().replace(/\s+/g, '-')}`
-      }));
-      setCategories(formattedCategories);
+      setCategories(rawCategories);
     }
   }, [rawCategories]);
 
@@ -48,19 +42,19 @@ const Navbar = () => {
   const handleSearchFunction = () => {
     if (inputValue.trim()) {
       setInputValue('')
-      window.location.href = "/products/search/" + inputValue
+      window.location.href = `/products/search/${selectedCategory}/${inputValue}`
     }
   }
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
+  };
   
   return (
     <nav className="navbar">
       <div className="navbar__top">
         <div className="navbar__top-right">
-          <p>Hi {isSignIn && user ? (
-            <span>{user.username}</span>
-          ) : (
-            <span>(<Link to='/login'>Sign in</Link> or <Link to='/signup'>Register</Link>)</span>
-          )}</p>
+          <p>Hi {isSignIn ? (<span>{user.username}</span>) : (<span>(<Link to='/login'>Sign in</Link> or <Link to='/signup'>Register</Link>)</span>)}</p>
           <ul>
             <li>Daily deals</li>
             <li>Brand outlets</li>
@@ -85,17 +79,32 @@ const Navbar = () => {
           <CategoryModule isClicked={isClicked} setisClicked={setisClicked}/>
         </button>
         <div className="navbar__bottom-search">
-          <input type="text" placeholder='Search for anything' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyPress={handleKeyPress} />
+          <input 
+            type="text" 
+            placeholder='Search for anything' 
+            value={inputValue} 
+            onChange={(e) => setInputValue(e.target.value)} 
+            onKeyPress={handleKeyPress} 
+          />
           <IoIosSearch size={20} />
-          <SearchModule inputValue={inputValue} setInputValue={setInputValue} />
-          <select name="category-select" id="category-select">
-            <option value="0">All Categories</option>
+          <SearchModule 
+            inputValue={inputValue} 
+            setInputValue={setInputValue} 
+            selectedCategory={selectedCategory}
+          />
+          <select 
+            name="category-select" 
+            id="category-select" 
+            onChange={handleCategoryChange} 
+            value={selectedCategory}
+          >
+            <option value="all">All Categories</option>
             {categories && categories.map((category, index) => (
-              <option key={index} value={category.name}>{category.name}</option>
+              <option key={index} value={category.slug}>{category.name}</option>
             ))}
           </select>
         </div>
-        <button className='navbar__bottom-submit' onClick={handleSearchFunction} >
+        <button className='navbar__bottom-submit' onClick={handleSearchFunction}>
           Search
         </button>
         <p className='advanced_search'>Advanced</p>

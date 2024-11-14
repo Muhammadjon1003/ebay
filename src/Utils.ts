@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Product } from "./types/Product";
+import { Product, Category } from "./types/Product";
 
 export const useFetchData = (url: string) => {
   const [data, setData] = useState<any>(null);
@@ -22,18 +22,21 @@ export const useFetchData = (url: string) => {
 };
 
 export const useFetchCategories = (url: string, limit: number) => {
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(url);
         const result = await response.json();
-        
-        const categoryData = Array.isArray(result) ? result : [];
-        const stringCategories = categoryData.slice(0, limit);
-        
-        setCategories(stringCategories);
+        if (Array.isArray(result)) {
+          const formattedCategories = result.slice(0, limit).map(category => ({
+            name: category.name,
+            slug: category.slug,
+            url: category.url
+          }));
+          setCategories(formattedCategories);
+        }
       } catch (error) {
         console.error('Error fetching categories:', error);
         setCategories([]);
