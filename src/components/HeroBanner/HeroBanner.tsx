@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './HeroBanner.scss';
+import './Herobanner.scss';
 
 interface HeroBannerProps {
   variant?: 'first' | 'second';
